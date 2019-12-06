@@ -1,0 +1,72 @@
+---
+title: "Happiness and Sleep"
+author: "Margaret Butler"
+date: "12/6/2019"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+
+library(tidyverse)
+library(janitor)
+library(readxl)
+library(dplyr)
+library(gt)
+
+```
+
+This is gonna be fast and loose. I'm supposed to be writing the paper I want to use this in.
+
+```{r, sleep data}
+
+sleep_data <- read_excel("sleep_sched.xlsx") %>% 
+  clean_names()
+
+```
+
+```{r}
+sleep_data %>%
+  filter(week == 1) %>% 
+ggplot(aes(x = weekday, y = hours)) +
+  geom_col(fill = "red") +
+  labs(title = "Hours of Sleep per Day",
+       subtitle = "hours unregulated")
+
+sleep_data %>%
+  filter(week == 2) %>% 
+ggplot(aes(x = weekday, y = hours)) +
+  geom_col(fill = "steel blue") +
+  labs(title = "Hours of Sleep per Day",
+       subtitle = "hours regulated")
+
+sleep_data %>%
+  filter(week == 3) %>% 
+ggplot(aes(x = weekday, y = hours)) +
+  geom_col(fill = "red") +
+  labs(title = "Hours of Sleep per Day",
+       subtitle = "hours unregulated")
+
+sleep_data %>%
+  filter(week == 4) %>% 
+ggplot(aes(x = weekday, y = hours)) +
+  geom_col(fill = "steel blue") + 
+  labs(title = "Hours of Sleep per Day",
+       subtitle = "hours regulated")
+
+
+```
+
+```{r}
+
+sleep_data %>% 
+ggplot(aes(x = net_pos, y = hours, fill = net_pos)) +
+  geom_col() +
+  facet_wrap(~ week)+
+  labs(title = "Happiness Compared to Hours of Sleep",
+       subtitle = "Broken up by Week",
+       fill = "Happiness",
+       x = "Net Positive or Net Negative by Day",
+       y = "Hours")
+
+```
